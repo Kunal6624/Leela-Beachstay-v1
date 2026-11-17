@@ -1,0 +1,211 @@
+<header class="nav" [class.solid]="scrolled()">
+  <a href="#top" class="logo">🌴 Leela<b>BeachStay</b></a>
+  <nav>@for (n of nav; track n[1]) { <a [href]="'#' + n[1]">{{ n[0] }}</a> }</nav>
+  <button class="mode" (click)="toggle()" [attr.aria-label]="theme() === 'light' ? 'Switch to night mode' : 'Switch to day mode'">
+    <span class="ic" [class.night]="theme() === 'dark'">{{ theme() === 'light' ? '☀️' : '🌙' }}</span>
+    <span class="lbl">{{ theme() === 'light' ? 'Day' : 'Night' }}</span>
+  </button>
+  <a class="btn sm wa" [href]="hello" target="_blank" rel="noopener">Chat now</a>
+</header>
+
+<section class="hero" id="top">
+  <div class="slides">
+    @for (h of heroImgs; track h.src; let i = $index) { <div class="s" [class.on]="idx() === i" [style.background]="bg(h.src, '#0b2a4a,#f2a65a', 1800, h.pos)"></div> }
+  </div>
+  <div class="hero-in">
+    <p class="kick">Discover • Stay • Unwind</p>
+    <h1>@for (w of words; track w; let i = $index) { <span class="w"><i [style.--i]="i">{{ w }}</i></span> } <span class="w"><em [style.--i]="4">Here</em></span></h1>
+    <p class="lead">Comfortable rooms, golden sunsets and sea breeze, two minutes from the sand.</p>
+    <div class="row">
+      <a class="btn white" href="#rooms">Explore rooms</a>
+      <a class="btn glass" [href]="hello" target="_blank" rel="noopener">Book on WhatsApp</a>
+    </div>
+  </div>
+  <div class="sea" aria-hidden="true">
+    <svg class="lay l1" viewBox="0 0 2880 200" preserveAspectRatio="none"><path [attr.d]="wBack"/></svg>
+    <svg class="lay l2" viewBox="0 0 2880 200" preserveAspectRatio="none"><path [attr.d]="wMid"/></svg>
+    @for (k of [1, 2]; track k) {
+      <div class="surfer" [class.two]="k === 2"><div class="sf">
+        <svg viewBox="0 0 130 120"><ellipse class="board" cx="64" cy="98" rx="54" ry="6.5" transform="rotate(-7 64 98)"/><path d="M14 96 L112 82" stroke="#fff" stroke-width="2" opacity=".7"/>
+          <path d="M50 95 L53 72 L64 64" stroke="#16283a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M76 90 L72 70 L64 64" stroke="#16283a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M64 64 L61 38" stroke="#ff5a3c" stroke-width="13" stroke-linecap="round"/>
+          <path d="M60 44 L28 56 M62 42 L98 30" stroke="#c98b5c" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="61" cy="25" r="9.5" fill="#c98b5c"/><path d="M51 23 Q61 7 71 22 Q61 16 51 23Z" fill="#2a1a10"/></svg>
+        <span class="spray"><i></i><i></i><i></i></span>
+      </div></div>
+    }
+    <svg class="lay l3" viewBox="0 0 2880 200" preserveAspectRatio="none"><path [attr.d]="wFront"/><path class="foam" [attr.d]="wFoam"/></svg>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div>@for (k of [1, 2]; track k) { @for (a of amenities; track a[1]) { <span>{{ a[0] }} {{ a[1] }}</span> } }</div></div>
+
+<section id="about" class="sec">
+  <div class="split">
+    <div reveal class="collage">
+      <div class="c c1" role="button" tabindex="0" (click)="show(aboutImgs, 0)" (keydown.enter)="show(aboutImgs, 0)"><div class="ph" [style.background]="bg(aboutImgs[0], '#0f6e8c,#2bd4c0', 900, 'center 60%')"></div></div>
+      <div class="c c2" role="button" tabindex="0" (click)="show(aboutImgs, 1)" (keydown.enter)="show(aboutImgs, 1)"><div class="ph" [style.background]="bg(aboutImgs[1], '#0f6e8c,#f2a65a', 700)"></div></div>
+      <div class="c c3" role="button" tabindex="0" (click)="show(aboutImgs, 2)" (keydown.enter)="show(aboutImgs, 2)"><div class="ph" [style.background]="bg(aboutImgs[2], '#2f7a4d,#9ad66f', 700)"></div></div>
+      <span class="badge">Where guests become family</span>
+    </div>
+    <div reveal [style.--d]="'.15s'">
+      <p class="eyebrow">Welcome to {{ name }}</p>
+      <h2>A quiet home among the palms</h2>
+      <p class="txt">{{ name }} is a small, family-run guest house tucked between coconut palms and banana groves, a short walk from the beach. Everything is made for slow, easy holidays: a sparkling pool, a lawn strung with fairy lights and cosy rooms with balconies.</p>
+      <p class="txt">Mornings begin with chai on the lawn and a fresh breakfast. Afternoons belong to the pool, and evenings are for dinner under the lights. Our hosts are always around to suggest beaches, cafes and day trips, because here guests really do become family.</p>
+      <ul class="pts">@for (p of aboutPoints; track p) { <li>{{ p }}</li> }</ul>
+          </div>
+  </div>
+</section>
+
+<section class="band" reveal>
+  <div class="bandin">@for (s of stats; track s.l) { <div><b [attr.data-count]="s.v" [attr.data-suffix]="s.s">0</b><small>{{ s.l }}</small></div> }</div>
+</section>
+
+<section id="rooms" class="sec alt">
+  <div reveal class="head"><p class="eyebrow">Rooms &amp; rates</p><h2>Silver, Gold &amp; Premium</h2><p class="sub">Per night for two guests. Tap a room to see all its photos and details.</p></div>
+  <div class="plans">
+    @for (r of rooms; track r.tier; let i = $index) {
+      <article reveal class="plan" [class.pop]="i === 1" [style.--c1]="r.c1" [style.--c2]="r.c2" [style.--ct]="r.ct" [style.--d]="i * 0.15 + 's'">
+        <div class="pimg" role="button" tabindex="0" (click)="openRoom(r)" (keydown.enter)="openRoom(r)" [attr.aria-label]="'View ' + r.tier + ' room photos'">
+          <div class="ph" [style.background]="bg(r.imgs[0], '#0f6e8c,#2bd4c0', 800, r.pos)"></div>
+          <span class="chip">{{ r.icon }} {{ r.tier }}</span><span class="rate">★ {{ r.rating }}</span>
+          <span class="zoom">🔍 View {{ r.imgs.length }} photos</span>
+        </div>
+        <div class="cb">
+          <p class="tg">{{ r.tag }}</p>
+          <p class="txt2">{{ r.blurb }}</p>
+          <div class="pr"><b [attr.data-count]="r.price" data-prefix="₹">₹0</b><small>/night</small></div>
+          <ul class="ft">@for (f of r.feats; track f) { <li>{{ f }}</li> }</ul>
+          <div class="btns"><button class="btn ghost sm" (click)="openRoom(r)">Photos &amp; details</button><a class="btn sm" [href]="room(r.tier + ' room')" target="_blank" rel="noopener">Enquire</a></div>
+        </div>
+      </article>
+    }
+  </div>
+  <p reveal class="fine">Extra bed ₹500 per night. Children under 5 stay free. Taxes included. Festival and weekend rates may differ.</p>
+</section>
+
+<section id="food" class="sec">
+  <div reveal class="head"><p class="eyebrow">Food &amp; dining</p><h2>Fresh, home-style meals</h2><p class="sub">Served in our garden under the palms. Tap a photo to enlarge it.</p></div>
+  <div class="foods">
+    @for (f of foods; track f.t; let i = $index) {
+      <article reveal class="fd" [style.--d]="(i % 3) * 0.12 + 's'">
+        <div class="fimg" role="button" tabindex="0" (click)="show(foodImgs, i)" (keydown.enter)="show(foodImgs, i)" [attr.aria-label]="'Open ' + f.t + ' photo'">
+          <div class="ph" [style.background]="bg(f.img, f.g, 700)"></div><span class="ftag">{{ f.tag }}</span>
+        </div>
+        <div class="cb"><h3>{{ f.icon }} {{ f.t }}</h3><p class="time">🕐 {{ f.time }}</p><p class="txt2">{{ f.d }}</p>
+          <ul class="ft">@for (x of f.items; track x) { <li>{{ x }}</li> }</ul>
+          <p class="sp">⭐ <b>Speciality</b>{{ f.special }}</p></div>
+      </article>
+    }
+  </div>
+  <div reveal class="fnotes">@for (n of foodNotes; track n) { <span>{{ n }}</span> }</div>
+  <div reveal class="head" style="margin:5rem 0 2.5rem"><p class="eyebrow">Cuisines</p><h2>Flavours from our kitchen</h2><p class="sub">Tell us your taste and spice level and we cook it fresh.</p></div>
+  <div class="cuis">
+    @for (c of cuisines; track c.name; let i = $index) {
+      <article reveal class="cu" [style.--d]="(i % 3) * 0.12 + 's'">
+        <div class="cuh"><span>{{ c.icon }}</span><div><h3>{{ c.name }}</h3><p class="time">{{ c.type }}</p></div></div>
+        <p class="txt2">{{ c.info }}</p>
+        <div class="dishes">@for (d of c.dishes; track d) { <span>{{ d }}</span> }</div>
+        <div class="spice" [attr.aria-label]="'Spice level ' + c.spice + ' of 5'">Spice <i>@for (k of [1, 2, 3, 4, 5]; track k) { <b [class.on]="k <= c.spice">🌶️</b> }</i></div>
+      </article>
+    }
+  </div>
+</section>
+
+<section id="amenities" class="sec">
+  <div reveal class="head"><p class="eyebrow">Amenities</p><h2>Everything you need</h2></div>
+  <div class="am">@for (a of amenities; track a[1]; let i = $index) { <div reveal class="amc" [style.--d]="i * 0.05 + 's'"><span>{{ a[0] }}</span>{{ a[1] }}</div> }</div>
+</section>
+
+<section id="gallery" class="sec alt">
+  <div reveal class="head"><p class="eyebrow">Gallery</p><h2>A peek at paradise</h2><p class="sub">{{ shown().length }} photos · tap any photo to view it full screen</p></div>
+  <div class="tabs">@for (c of cats(); track c) { <button [class.on]="cat() === c" (click)="setCat(c)">{{ c }}</button> }</div>
+  <div class="gal">
+    @for (g of list(); track g.src; let i = $index) {
+      <button reveal class="gi" [class.big]="i % 10 === 0" [class.wide]="i % 10 === 5" [style.--d]="(i % 6) * 0.06 + 's'" [style.background]="bg(g.src, '#0f6e8c,#f2a65a', 900)" (click)="show(galImgs, i)" [attr.aria-label]="'Open photo: ' + g.cap"><span>{{ g.cap }}</span></button>
+    }
+  </div>
+  @if (list().length < shown().length) { <div class="mid"><button class="btn ghost" (click)="loadMore()">Show more photos ({{ shown().length - list().length }} more)</button></div> }
+</section>
+
+<section class="sec" id="experiences">
+  <div reveal class="head"><p class="eyebrow">Experiences</p><h2>Make every day memorable</h2></div>
+  <div class="exp">
+    @for (e of experiences; track e[1]; let i = $index) {
+      <div reveal class="ex" role="button" tabindex="0" (click)="show(expImgs, i)" (keydown.enter)="show(expImgs, i)" [style.--d]="i * 0.1 + 's'"><div class="ph" [style.background]="bg(e[3], '#0f6e8c,#f2a65a', 700)"></div><div class="exc"><span>{{ e[0] }}</span><h3>{{ e[1] }}</h3><p>{{ e[2] }}</p></div></div>
+    }
+  </div>
+</section>
+
+<section class="sec alt">
+  <div class="split top">
+    <div reveal>
+      <p class="eyebrow">Good to know</p><h2>House info &amp; policies</h2>
+      <div class="pol">@for (p of policies; track p[1]) { <div><span>{{ p[0] }}</span><b>{{ p[1] }}</b><small>{{ p[2] }}</small></div> }</div>
+    </div>
+    <div reveal [style.--d]="'.15s'">
+      <p class="eyebrow">What's nearby</p><h2>Close to everything</h2>
+      <ul class="near">@for (n of nearby; track n[1]) { <li><span>{{ n[0] }}</span>{{ n[1] }}<em>{{ n[2] }}</em></li> }</ul>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="sec">
+  <div reveal class="head"><p class="eyebrow">Guest reviews</p><h2>Loved by our guests</h2></div>
+  <div class="rev">@for (v of reviews; track v.n; let i = $index) { <blockquote reveal [style.--d]="i * 0.12 + 's'"><div class="stars">★★★★★</div><p>“{{ v.t }}”</p><cite>{{ v.n }} <small>{{ v.c }}</small></cite></blockquote> }</div>
+</section>
+
+<section id="faq" class="sec alt">
+  <div reveal class="head"><p class="eyebrow">FAQ</p><h2>Questions? We have answers</h2></div>
+  <div reveal class="faq">@for (f of faqs; track f[0]) { <details><summary>{{ f[0] }}</summary><p>{{ f[1] }}</p></details> }</div>
+</section>
+
+<section id="location" class="sec">
+  <div reveal class="head"><p class="eyebrow">Location</p><h2>Find us</h2><p class="sub">{{ address }}</p></div>
+  <iframe reveal class="map" [src]="mapUrl" title="LEELA - BEACHSIDE STAY" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div class="row c"><a class="btn" [href]="'https://www.google.com/maps/search/?api=1&query=' + mapQuery" target="_blank" rel="noopener">Get directions</a>
+    <a class="btn ghost" [href]="'tel:+' + phone">Call {{ phoneShow }}</a></div>
+</section>
+
+<section reveal class="cta" [style.background]="bg('/images/lawn.jpg', '#0b2a4a,#f2a65a', 1600)">
+  <h2>Your beach story awaits…</h2><p>Book directly with the owners. No platform fee.</p>
+  <a class="btn amber" [href]="hello" target="_blank" rel="noopener">Chat on WhatsApp</a>
+</section>
+<footer><b>{{ name }}</b> · {{ address }} · {{ phoneShow }}<br><small>© 2026 {{ name }}. All rights reserved.</small></footer>
+
+@if (viewer(); as v) {
+  <div class="lb" (click)="closeViewer()">
+    <div class="lbi" [style.backgroundImage]="'url(' + url(v.imgs[v.i]) + ')'" (click)="$event.stopPropagation()"></div>
+    @if (v.imgs.length > 1) {
+      <button class="nv l" (click)="step(-1); $event.stopPropagation()" aria-label="Previous photo">‹</button>
+      <button class="nv r" (click)="step(1); $event.stopPropagation()" aria-label="Next photo">›</button>
+      <span class="cnt">{{ v.i + 1 }} / {{ v.imgs.length }}</span>
+    }
+    <button class="x" (click)="closeViewer()" aria-label="Close">✕</button>
+  </div>
+}
+@if (picked(); as r) {
+  <div class="modal" (click)="closeRoom()">
+    <div class="mbox" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" [attr.aria-label]="r.tier + ' room'" [style.--c1]="r.c1" [style.--c2]="r.c2" [style.--ct]="r.ct">
+      <button class="x" (click)="closeRoom()" aria-label="Close">✕</button>
+      <div class="mimg">
+        <div class="main" [style.background]="bg(r.imgs[pi()], '#0f6e8c,#2bd4c0', 1200)"></div>
+        @if (r.imgs.length > 1) { <button class="nv l" (click)="stepRoom(-1)" aria-label="Previous photo">‹</button><button class="nv r" (click)="stepRoom(1)" aria-label="Next photo">›</button> }
+        <div class="thumbs">@for (m of r.imgs; track m; let k = $index) { <button [class.on]="pi() === k" [style.background]="bg(m, '#0f6e8c,#2bd4c0', 200)" (click)="pi.set(k)" [attr.aria-label]="'Photo ' + (k + 1)"></button> }</div>
+      </div>
+      <div class="minfo">
+        <span class="chip st">{{ r.icon }} {{ r.tier }}</span>
+        <h3>{{ r.tier }} Room</h3>
+        <p class="txt2">{{ r.blurb }}</p>
+        <div class="pr"><b>₹{{ r.price }}</b><small>/night · 2 guests</small></div>
+        <ul class="ft">@for (f of r.feats; track f) { <li>{{ f }}</li> }</ul>
+        <p class="fine l">Check-in 12:00 PM · Check-out 11:00 AM · Extra bed ₹500</p>
+        <div class="btns"><a class="btn wa" [href]="room(r.tier + ' room')" target="_blank" rel="noopener">Enquire on WhatsApp</a></div>
+      </div>
+    </div>
+  </div>
+}
+
+<a class="float" [href]="hello" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32" width="34" height="34" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.4 8.6 3.4 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-2c1.8 1 3.8 1.5 5.8 1.5 7 0 12.6-5.6 12.6-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.200-1.5l-.4-.2-4.400 1.200 1.200-4.300-.3-.4a10.200 10.200 0 0 1-1.600-5.500C5.300 9.500 10.100 5 16 5s10.700 4.600 10.700 10.400S21.900 25.800 16 25.800zm5.900-7.700c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.5c.1-.2.200-.3.300-.5.100-.2 0-.4 0-.5l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1.100 1.100-1.100 2.600s1.100 3 1.300 3.200c.2.200 2.200 3.300 5.300 4.600 3.100 1.300 3.100.9 3.600.8.600-.1 1.900-.8 2.100-1.5.3-.7.300-1.400.2-1.5l-.5-.3z"/></svg></a>
